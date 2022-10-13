@@ -12,6 +12,7 @@
     "react-countdown": "^2.3.2",
     "react-dom": "^18.2.0",
     "react-live-clock": "^6.0.6",
+    "react-player": "^2.11.0",
     "react-scripts": "5.0.1",
     "react-tooltip": "^4.2.21",
     "sts-svg-sprite-generator": "^1.0.3",
@@ -22,7 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "svg-sprite-generate": "svg-sprite-generate -d ./src/assets/svg-icons -o ./src/assets/svg-icons/sprite.svg"  
+    "svg-sprite-generate": "svg-sprite-generate -d ./src/assets/svg-icons -o ./src/assets/svg-icons/sprite.svg"
   },
   "eslintConfig": {
     "extends": [
