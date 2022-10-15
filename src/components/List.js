@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { InView } from "react-intersection-observer";
 import Card from "./Card";
-function List({ hideTitle = true }) {
+import SvgIcon from "../components/SvgIcon";
+function List({ hideTitle = true, onClickVideoPreview }) {
   let { id } = useParams();
-  // const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1);
+  const [overlay, setOverlay] = useState(false);
   const list = [
     "https://www.youtube.com/watch?v=buH1hXjCc2g",
     "https://www.youtube.com/watch?v=0W_ufV2h8VY",
@@ -501,38 +504,22 @@ function List({ hideTitle = true }) {
   const getShortList = list
 
     .map((url) => url?.split("=")[1])
-    ?.filter((item, i) => item !== id);
-  // ?.filter((item, i) => item !== id && i <= page * 10);
+    ?.filter((item, i) => item !== id && i < page * 20);
 
-  const observerSpinner = () => {
-    const elem = document.getElementById("spinner");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            window.scrollTo({ top: 0 });
-            // setPage(page + 1);
-            // console.log(2222, page);
-            // if (list.length === getShortList.length) {
-            //   window.scrollTo({ top: 0 });
-            //   setPage(1);
-            //   console.log(1111, page);
-            // } else {
-            //   setPage(page + 1);
-            //   console.log(2222, page);
-            // }
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    observer.observe(elem);
+  const observerSpinner = (inView, entry) => {
+    if (inView) setPage(page + 1);
+    if (getShortList.length > list.length - 5) {
+      window.scrollTo({ top: 0 });
+      setPage(1);
+    }
   };
 
-  useEffect(() => {
-    observerSpinner();
-  }, []);
+  const handleOverlay = () => {
+    setOverlay(true);
+    setTimeout(() => {
+      setOverlay(false);
+    }, 1000);
+  };
 
   return (
     <div className="marker_list flex flex-col gap-3 md:flex-row md:flex-wrap md:justify-center mt-2 relative">
@@ -542,10 +529,21 @@ function List({ hideTitle = true }) {
           url={url}
           hideTitle={hideTitle}
           wrapperClass="min-w-[150px]"
+          onClickVideoPreview={handleOverlay}
         />
       ))}
 
-      <div id="spinner" className="w-full h-5"></div>
+      <InView
+        as="div"
+        onChange={(inView, entry) => observerSpinner(inView, entry)}
+      >
+        <div id="spinner" className="w-full h-5"></div>
+      </InView>
+      {overlay && (
+        <div className="absolute inset-0 bg-slate-300 pt-10 opacity-30">
+          <SvgIcon id="spinner" className="mx-auto" />
+        </div>
+      )}
     </div>
   );
 }

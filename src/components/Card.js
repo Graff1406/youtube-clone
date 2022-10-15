@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ReactPlayer from "react-player";
 import SvgIcon from "./SvgIcon";
 function Card({
@@ -14,10 +14,8 @@ function Card({
   fullscreen = false,
   children,
   onReadyPlayer,
+  onClickVideoPreview,
 }) {
-  useEffect(() => {
-    // window.addEventListener('resize', () => )
-  }, []);
   const [preventMoveToOrigin, setPreventMoveToOrigin] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const handleEnd = () => {
@@ -38,6 +36,7 @@ function Card({
         className={`group relative w-full ${
           isFullscreen ? "h-screen" : `h-[210px] ${className}`
         }`}
+        onClick={() => onClickVideoPreview(false)}
       >
         <ReactPlayer
           url={"https://www.youtube.com/watch?v=" + url}
@@ -65,7 +64,7 @@ function Card({
           onEnded={handleEnd}
           onPlay={onPlay}
           onPause={handleEnd}
-          onReady={onReadyPlayer}
+          onStart={() => onReadyPlayer(true)}
         />
         {preventPlay && <div className="absolute inset-0"></div>}
         {preventMoveToOrigin ? (
