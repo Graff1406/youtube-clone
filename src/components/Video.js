@@ -18,7 +18,7 @@ function Video({ hideTitle = true, videoList = [], onReadyPlayer }) {
           onReadyPlayer={onReadyPlayer}
         >
           <div className="overflow-y-scroll overflow-x-hidden w-full">
-            <List hideTitle={false} />
+            <List hideTitle={false} t="Video" />
           </div>
         </Card>
       </div>

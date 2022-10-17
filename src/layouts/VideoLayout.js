@@ -10,7 +10,9 @@ function VideoLayout() {
   return (
     <div className="bg-gray-100 w-screen min-h-full">
       <Video hideTitle={false} onReadyPlayer={handlerReadyPlayer} />
-      <div className="relative">{isReadyPlayer && <List />}</div>
+      <div className="relative">
+        {isReadyPlayer && <List hideTitle={false} t="VidLay" />}
+      </div>
     </div>
   );
 }

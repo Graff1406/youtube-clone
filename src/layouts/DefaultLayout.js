@@ -7,7 +7,7 @@ function DefaultLayout({ children }) {
 
       {children}
 
-      <List />
+      <List hideTitle={false} t="DefLay" />
     </div>
   );
 }

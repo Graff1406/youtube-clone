@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import ReactPlayer from "react-player";
+import Swipe from "react-easy-swipe";
 import SvgIcon from "./SvgIcon";
 function Card({
   url,
@@ -8,6 +9,7 @@ function Card({
   autoplay = 1,
   light = true,
   preventPlay = true,
+  fixed = false,
   className = "",
   wrapperClass = "",
   hideTitle = true,
@@ -66,7 +68,7 @@ function Card({
           onPause={handleEnd}
           onStart={() => onReadyPlayer(true)}
         />
-        {preventPlay && <div className="absolute inset-0"></div>}
+
         {preventMoveToOrigin ? (
           <div className="flex justify-center align-middle gap-3 absolute top-0 left-0 right-0 bottom-[38px] bg-black p-3">
             {children}
@@ -83,17 +85,24 @@ function Card({
             ></SvgIcon>
           </div>
         )}
+        <Swipe
+          onSwipeUp={() => fixed && setPreventMoveToOrigin(true)}
+          onSwipeDown={() => fixed && setPreventMoveToOrigin(false)}
+        >
+          {preventPlay && <div className="absolute inset-0"></div>}
+          <div className="absolute left-24 right-24 bottom-0 h-11"></div>
+        </Swipe>
       </div>
       {hideTitle && (
         <div className="flex align-middle w-full h-14 px-4 bg-white gap-3">
           <img
-            src="https://yt3.ggpht.com/ytc/AMLnZu8GABltI2XpBxrmjFcPu1LqVlEALgiqELAwK2b-7Q=s900-c-k-c0x00ffffff-no-rj"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Nick_Jr._Channel_logo.svg/640px-Nick_Jr._Channel_logo.svg.png"
             alt="logo"
-            className="w-9 h-9 mt-2"
+            className="w-9 h-9 mt-2 object-cover"
           />
           <h3 className="text-ellipsis font-medium text-sm mt-1">
-            🎃 Build & Deploy a Responsive Halloween Website Design Using HTML
-            CSS & JavaScript
+            🎃Silly Halloween Song + More Nursery Rhymes & Kids Songs -
+            CoComelon
           </h3>
         </div>
       )}
