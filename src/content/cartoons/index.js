@@ -1,6 +1,13 @@
-import PAW from "./PAW";
+import pwa from "./PAW";
 import oddbods from "./oddbods";
 import different from "./different";
+import tomAndJerry from "./tomAndJery";
 import develop from "../develop";
 
-export default different.concat(PAW, oddbods, PAW, oddbods, different, develop);
+export default {
+  pwa,
+  oddbods,
+  different,
+  develop,
+  tomAndJerry,
+};

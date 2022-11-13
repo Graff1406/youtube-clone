@@ -3,15 +3,16 @@ import { InView } from "react-intersection-observer";
 import Card from "./Card";
 import SvgIcon from "../components/SvgIcon";
 import cartoons from "../content/cartoons";
-function List({ hideTitle = true, t }) {
-  console.log(111, t);
+function List({ hideTitle = true }) {
   const [page, setPage] = useState(0);
   const [overlay, setOverlay] = useState(false);
   const [list, setList] = useState([]);
-
+  const localStageFilterVideo = localStorage.getItem("video-filter");
+  const allVideos =
+    cartoons[localStageFilterVideo] || Object.values(cartoons).flat();
   const observerSpinner = (inView, entry) => {
     if (inView) setPage(page + 1);
-    if (list.length > cartoons.length - 5) {
+    if (list.length > allVideos.length - 5) {
       window.scrollTo({ top: 0 });
       setPage(0);
     }
@@ -25,7 +26,7 @@ function List({ hideTitle = true, t }) {
   };
 
   useEffect(() => {
-    const currentList = cartoons
+    const currentList = allVideos
       ?.map((url) => url?.split("=")[1])
       ?.sort((a, b) => 0.5 - Math.random())
       .slice(page * 10, page ? page * 10 + 10 : 10);
